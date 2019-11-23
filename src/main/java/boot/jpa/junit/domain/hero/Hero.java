@@ -18,7 +18,7 @@ public class Hero extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(length = 20)
+    @Column(length = 40)
     private String name;
 
     @Column
