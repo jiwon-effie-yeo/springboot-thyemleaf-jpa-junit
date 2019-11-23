@@ -129,7 +129,17 @@ public class HeroRepositoryTest {
                 .orElse("");
     }
 
+    @Test
+    public void HeroDeleteRequest(){
+        heroRepository.save(Hero.builder()
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build());
+        heroRepository.deleteById(1L);
 
+        assertNull(heroRepository.findById(1L).orElse(null));
+    }
 
 
 
