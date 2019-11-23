@@ -8,7 +8,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -74,7 +76,62 @@ public class HeroRepositoryTest {
         assertThat(output.size(), is(10));
     }
 
-    
+    @Test
+    public void HeroFindByResponseTest(){
+        //given
+        Hero input = Hero.builder()
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build();
+
+        heroRepository.save(input);
+
+        //when
+        Hero output = heroRepository.findById(1L).orElse(null); //exception
+
+        //then
+        assertThat(input.getName(), is(output.getName()));
+        assertThat(input.getAge(), is(output.getAge()));
+        assertThat(input.getMemo(), is(output.getMemo()));
+    }
+
+    @Test
+    public void HeroUpdateRequestTest(){
+        Hero input = Hero.builder()
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build();
+
+        heroRepository.save(input);
+
+        //when
+        heroRepository.save(Hero.builder()
+                .id(1L)
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build());
+
+        //then
+        Hero output = heroRepository.findById(1L).orElse(null);
+        assertThat(input.getId(),is(output.getId()));
+        assertThat(toStringCreateDate(input.getCratedDate()), is(toStringCreateDate(output.getCratedDate())));
+        assertTrue(output.getModifiedDate()
+                    .isAfter(input.getModifiedDate()));
+    }
+
+    public String toStringCreateDate(LocalDateTime createDate){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return Optional.ofNullable(createDate)
+                .map(formatter::format)
+                .orElse("");
+    }
+
+
+
+
 
 
 }
