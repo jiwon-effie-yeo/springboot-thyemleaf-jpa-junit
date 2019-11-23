@@ -8,6 +8,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -53,7 +55,26 @@ public class HeroRepositoryTest {
         Hero output = heroRepository.save(input);
 
         assertThat(input, is(output));
-
     }
+
+    @Test
+    public void HeroFindAllIdResponseTest(){
+        //given
+        IntStream.rangeClosed(1,10).forEach(i ->
+               heroRepository.save(Hero.builder()
+                       .name("github.com/jiwon-effie-yeo")
+                       .age(25)
+                       .memo("github.com/jiwon-effie-yeo")
+                       .build()));
+
+        //when
+        List<Hero> output = heroRepository.findAll();
+
+        //then
+        assertThat(output.size(), is(10));
+    }
+
+    
+
 
 }
