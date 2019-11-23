@@ -2,7 +2,9 @@ package boot.jpa.junit.service;
 
 import boot.jpa.junit.domain.hero.HeroRepository;
 import boot.jpa.junit.dto.HeroFindAllResponseDto;
+import boot.jpa.junit.dto.HeroFindByIdResponseDto;
 import boot.jpa.junit.dto.HeroSaveRequestDto;
+import boot.jpa.junit.dto.HeroUpdateRequestDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,4 +64,45 @@ public class HeroServiceTest {
         //then
         assertThat(output.size(), is(10));
     }
+
+    @Test
+    public void HeroFindIdResponseTest(){
+        HeroSaveRequestDto input = HeroSaveRequestDto.builder()
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build();
+
+        heroService.HeroSaveRequest(input);
+
+        HeroFindByIdResponseDto output = heroService.HeroFindByIdResponse(1L);
+
+        assertThat(input.getName(),is(output.getName()));
+        assertThat(input.getAge(), is(output.getAge()));
+        assertThat(input.getMemo(), is(output.getMemo()));
+    }
+
+    @Test
+    public void HeroUpdateRequestTest(){
+        HeroSaveRequestDto input = HeroSaveRequestDto.builder()
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build();
+
+        heroService.HeroSaveRequest(input);
+
+        //when
+        Long output = heroService.HeroUpdateRequest(HeroUpdateRequestDto.builder()
+                .id(1L)
+                .name("github.com/jiwon-effie-yeo")
+                .age(25)
+                .memo("github.com/jiwon-effie-yeo")
+                .build());
+
+        assertThat(output,is(1L));
+
+    }
+
+
 }
