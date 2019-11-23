@@ -17,7 +17,7 @@ public  abstract  class BaseTimeEntity {
 
     @CreatedDate
     @Column(updatable = false) // once i put a value, that will never change the value forever
-    private LocalDateTime cratedDate;
+    private LocalDateTime createdDate;
 
     @LastModifiedDate
     private LocalDateTime modifiedDate;

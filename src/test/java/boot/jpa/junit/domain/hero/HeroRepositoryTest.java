@@ -42,7 +42,7 @@ public class HeroRepositoryTest {
         //when
         Hero output = heroRepository.save(input);
         //then
-        assertTrue(output.getCratedDate().isAfter(now));
+        assertTrue(output.getCreatedDate().isAfter(now));
         assertTrue(output.getModifiedDate().isAfter(now));
     }
 
@@ -117,7 +117,7 @@ public class HeroRepositoryTest {
         //then
         Hero output = heroRepository.findById(1L).orElse(null);
         assertThat(input.getId(),is(output.getId()));
-        assertThat(toStringCreateDate(input.getCratedDate()), is(toStringCreateDate(output.getCratedDate())));
+        assertThat(toStringCreateDate(input.getCreatedDate()), is(toStringCreateDate(output.getCreatedDate())));
         assertTrue(output.getModifiedDate()
                     .isAfter(input.getModifiedDate()));
     }
